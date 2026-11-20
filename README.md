@@ -1,6 +1,6 @@
 # AccessKart
 
-AccessKart is a frontend-only accessibility-focused e-commerce marketplace built with React, Vite, TypeScript, and Fluent UI. It supports assistive-product browsing, purchasing, rentals, comparison, localStorage persistence, simulated checkout, and accessibility preferences.
+AccessKart is a frontend-only accessibility-focused e-commerce marketplace built with React, Vite, TypeScript, and Fluent UI. It supports assistive-product browsing, purchasing, rentals, comparison,simulated checkout, and accessibility preferences.
 
 ## Prerequisites
 
