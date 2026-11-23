@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardPreview, Divider, Tag, Text, Title2 } from '@fluentui/react-components';
 import { ArrowRightRegular, CheckmarkCircleRegular, HeartRegular, StarRegular } from '@fluentui/react-icons';
 import { Link } from 'react-router-dom';
+import { ImageWithFallback } from '../components/ImageWithFallback';
 import { ProductCard } from '../components/ProductCard';
 import { useStore } from '../context/StoreContext';
 
@@ -19,7 +20,7 @@ export function HomePage() {
           <div className="hero-proof"><span className="proof-avatar-stack"><i>J</i><i>A</i><i>M</i></span><span>Loved by 2,400+ families</span><span className="proof-stars" aria-label="Five out of five stars"><StarRegular /><StarRegular /><StarRegular /><StarRegular /><StarRegular /></span></div>
         </div>
         <div className="hero-art" role="img" aria-label="A quiet, sunny living space thoughtfully arranged for comfort">
-          <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=90" alt="" />
+          <ImageWithFallback src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=90" alt="" />
           <div className="hero-art-note"><span className="hero-note-icon"><HeartRegular /></span><span><strong>Made for real life</strong><small>Support that fits your day</small></span></div>
           <div className="hero-sticker"><strong>Everyday</strong><span>can feel<br />a little easier</span></div>
         </div>
@@ -34,7 +35,7 @@ export function HomePage() {
           {categories.map((category, index) => (
             <Card key={category.id} className={`category-card category-card--${index % 3}`}>
               <Link to={`/shop?category=${category.id}`} className="category-link">
-                <CardPreview className="category-preview"><img src={category.image} alt="" loading="lazy" /></CardPreview>
+                <CardPreview className="category-preview"><ImageWithFallback src={category.image} alt="" loading="lazy" /></CardPreview>
                 <CardHeader header={<span className="category-name">{category.name}</span>} description={<span>{category.description}</span>} />
                 <span className="category-arrow" aria-hidden="true"><ArrowRightRegular /></span>
               </Link>
@@ -44,7 +45,7 @@ export function HomePage() {
       </section>
 
       <section className="editorial-banner">
-        <div className="editorial-image"><img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=85" alt="Friends enjoying a sunny afternoon together" loading="lazy" /></div>
+        <div className="editorial-image"><ImageWithFallback src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=85" alt="Friends enjoying a sunny afternoon together" loading="lazy" /></div>
         <div className="editorial-copy"><Tag shape="rounded">A more flexible way</Tag><Title2>Try it out. Make it yours.</Title2><Text>Some things are easier to choose after living with them. Rent trusted favorites for a day, a week, or a little longer.</Text><Link className="fui-Button fui-Button--primary" to="/rent">Explore rentals <ArrowRightRegular /></Link><span className="editorial-footnote">No pressure. Just a little more room to decide.</span></div>
       </section>
 

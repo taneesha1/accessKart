@@ -27,6 +27,8 @@ body, button, input, select { font-family: "DM Sans", Inter, system-ui, -apple-s
 button, a, input, select { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #d89b61 !important; outline-offset: 3px; }
 a { color: #176b5b; }
+a.fui-Button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; font-weight: 600; line-height: 1.2; text-align: center; text-decoration: none; }
+a.fui-Button--primary, a.fui-Button--primary:visited, a.fui-Button--primary:hover, a.fui-Button--primary:active { color: #fff; }
 img { display: block; max-width: 100%; }
 h1, h2, h3, p { margin-top: 0; }
 .fluent-app { min-height: 100vh; background: var(--color-surface); }
@@ -38,7 +40,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .announcement { min-height: 32px; padding: 5px 5.2%; display: flex; justify-content: space-between; align-items: center; gap: 20px; color: #e7eee8; background: #143b33; font-size: .73rem; letter-spacing: .025em; }
 .announcement-note { color: #c3d5ca; }
-.site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,254,250,.96); border-bottom: 1px solid rgba(216,223,218,.75); backdrop-filter: blur(14px); }
+.site-header { position: sticky; top: 0; z-index: 20; background: #fffefa; border-bottom: 1px solid rgba(216,223,218,.75); }
 .site-toolbar { max-width: 1440px; height: 78px; margin: 0 auto; padding: 0 5.2%; display: flex; align-items: center; justify-content: space-between; gap: 34px; }
 .brand-lockup { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; flex: 0 0 auto; }
 .brand-mark { width: 35px; height: 35px; display: grid; place-items: center; border-radius: 12px; color: white; background: #176b5b; font-family: "Playfair Display", Georgia, serif; font-size: 1.75rem; font-weight: 600; line-height: 1; box-shadow: 0 4px 10px rgba(23,107,91,.18); }
@@ -51,7 +53,9 @@ h1, h2, h3, p { margin-top: 0; }
 .header-search button { border: 0; border-radius: 999px; padding: 7px 15px; background: #176b5b; color: white; font-size: .76rem; font-weight: 600; cursor: pointer; }
 .header-actions { display: flex; align-items: center; gap: 5px; }
 .header-actions [role=toolbar] { gap: 3px; }
+.site-header button, .site-header [role=tab] { transition: none !important; animation: none !important; transform: none !important; }
 .header-actions button { min-width: 38px; min-height: 38px; color: #31574d; }
+.header-actions button:hover { color: #176b5b !important; background-color: #e9f2ed !important; }
 .account-shortcut { display: inline-flex; align-items: center; gap: 8px; margin-left: 8px; color: #31574d; font-size: .78rem; font-weight: 600; text-decoration: none; }
 .account-shortcut .fui-Avatar { background: #e8eee8; color: #176b5b; }
 .desktop-nav { max-width: 1440px; height: 52px; margin: 0 auto; padding: 0 5.2%; display: flex; align-items: center; justify-content: space-between; }
@@ -114,7 +118,7 @@ h1, h2, h3, p { margin-top: 0; }
 .section-heading h2, .section-heading .fui-Title2 { margin: 0; color: #183c32; font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.7rem,2.7vw,2.35rem); font-weight: 500; letter-spacing: -.035em; }
 .section-heading > div > .fui-Text { color: #748178; font-size: .86rem; }
 .section-link { display: inline-flex; align-items: center; gap: 7px; padding-bottom: 5px; color: #176b5b; font-size: .78rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
-.category-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 17px; }
+.category-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 17px; }
 .category-card { position: relative; min-width: 0; overflow: hidden; border: 1px solid #e4e6df; border-radius: 17px; background: #fffefa; box-shadow: 0 3px 14px rgba(23,54,43,.035); transition: transform .18s ease, box-shadow .18s ease; }
 .category-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
 .category-link { display: grid; grid-template-columns: 90px minmax(0,1fr) 20px; min-height: 123px; align-items: center; gap: 14px; padding: 13px 17px 13px 13px; color: inherit; text-decoration: none; }
@@ -132,20 +136,20 @@ h1, h2, h3, p { margin-top: 0; }
 .editorial-copy .fui-Tag { margin-bottom: 15px; color: #5e795f; background: #d5e0d1; }
 .editorial-copy h2, .editorial-copy .fui-Title2 { margin-bottom: 12px; color: #244538; font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.8rem,3vw,2.6rem); font-weight: 500; letter-spacing: -.04em; }
 .editorial-copy > .fui-Text { max-width: 440px; margin-bottom: 21px; color: #607066; font-size: .87rem; line-height: 1.75; }
-.editorial-copy .fui-Button { min-height: 42px; border-radius: 10px; background: #176b5b; }
+.editorial-copy .fui-Button { min-height: 42px; padding: 0 17px; border-radius: 10px; background: #176b5b; }
 .editorial-footnote { margin-top: 12px; color: #879085; font-size: .68rem; }
-.product-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 19px; }
-.product-card { min-width: 0; overflow: hidden; border: 1px solid #e6e9e2; border-radius: var(--radius-card); background: var(--color-card); box-shadow: var(--shadow-card); transition: transform .18s ease, box-shadow .18s ease; }
+.product-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-auto-rows: 1fr; align-items: stretch; gap: 19px; }
+.product-card { min-width: 0; height: 100%; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e6e9e2; border-radius: var(--radius-card); background: var(--color-card); box-shadow: var(--shadow-card); transition: transform .18s ease, box-shadow .18s ease; }
 .product-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
 .product-card-preview { position: relative; height: 235px; overflow: hidden; background: #eeece4; }
 .product-image-link, .product-image-link img { display: block; width: 100%; height: 100%; }
 .product-image { object-fit: cover; transition: transform .4s ease; }
 .product-card:hover .product-image { transform: scale(1.035); }
-.product-image-actions { position: absolute; top: 12px; right: 12px; }
+.fui-CardPreview.product-card-preview > .product-image-actions { position: absolute; inset: 12px 12px auto auto; justify-self: end; align-self: start; width: max-content; height: max-content; }
 .product-image-actions .fui-Button { min-width: 38px; width: 38px; height: 38px; background: rgba(255,254,250,.92); color: #32624f; box-shadow: 0 3px 12px rgba(21,46,36,.12); }
 .product-image-actions .fui-Button svg { color: #a0524c; }
-.image-rental-tag { position: absolute; bottom: 12px; left: 12px; padding: 5px 10px; border: 1px solid rgba(255,255,255,.7); border-radius: 999px; color: #205546; background: rgba(255,254,250,.91); font-size: .67rem; font-weight: 700; }
-.product-card .fui-CardHeader { padding: 16px 17px 5px; align-items: flex-start; }
+.fui-CardPreview.product-card-preview > .image-rental-tag { position: absolute; inset: auto auto 12px 12px; justify-self: start; align-self: end; width: max-content; height: max-content; max-width: calc(100% - 24px); padding: 5px 10px; border: 1px solid rgba(255,255,255,.7); border-radius: 999px; color: #205546; background: rgba(255,254,250,.91); font-size: .67rem; font-weight: 700; }
+.product-card .fui-CardHeader { min-height: 82px; padding: 16px 17px 5px; align-items: flex-start; }
 .product-card .fui-CardHeader__header { min-width: 0; }
 .product-title { display: block; color: #214638; font-family: "Playfair Display", Georgia, serif; font-size: 1.18rem; font-weight: 600; line-height: 1.35; text-decoration: none; }
 .product-title:hover { color: #176b5b; text-decoration: underline; text-underline-offset: 3px; }
@@ -153,13 +157,13 @@ h1, h2, h3, p { margin-top: 0; }
 .product-vendor svg { color: #c68e4d; }
 .review-count { color: #89938e; }
 .product-card .fui-Tag { max-width: 105px; padding: 3px 7px; border-color: #e3e9e2; color: #557665; background: #f1f5f0; font-size: .62rem; }
-.product-card-body { padding: 5px 17px 13px; }
+.product-card-body { display: flex; flex: 1; flex-direction: column; padding: 5px 17px 13px; }
 .product-card-copy { display: -webkit-box; min-height: 42px; overflow: hidden; color: #75817a; font-size: .74rem; line-height: 1.55; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .product-price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 9px; }
 .product-price { color: #1c4639; font-size: 1.38rem; font-weight: 700; letter-spacing: -.035em; }
 .product-price-caption { color: #87918a; font-size: .65rem; }
 .rental-caption { display: block; margin-top: 3px; color: #9c764c !important; font-size: .72rem; }
-.product-card-footer { display: flex; justify-content: space-between; gap: 6px; padding: 12px 14px 14px; border-top: 1px solid #eff0ec; }
+.product-card-footer { display: flex; justify-content: space-between; gap: 6px; margin-top: auto; padding: 12px 14px 14px; border-top: 1px solid #eff0ec; }
 .product-card-footer .fui-Button { min-width: 0; min-height: 36px; border-radius: 9px; font-size: .72rem; }
 .product-card-footer .fui-Button:first-child { flex: 1; background: #176b5b; }
 .closing-note { display: flex; align-items: center; gap: 20px; margin-top: 72px; padding: 26px 30px; border: 1px solid #e3e6de; border-radius: 16px; background: #f0eee5; }
@@ -194,6 +198,8 @@ h1, h2, h3, p { margin-top: 0; }
 .results-toolbar { display: flex; justify-content: space-between; gap: 12px; margin: 1px 0 17px; color: #335747; font-size: .8rem; }
 .results-toolbar > .fui-Text { color: #7a867f; white-space: nowrap; }
 .results-toolbar a { color: #176b5b; text-decoration: none; }
+.shop-sort { display: flex; flex: 0 0 auto; align-items: center; gap: 12px; }
+.shop-sort .fui-Select { min-width: 160px; }
 .shop-results .product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .shop-results .product-card-preview { height: 220px; }
 .empty-panel { min-height: 210px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px; padding: 34px; border: 1px dashed #d6ddd4; border-radius: 18px; background: #fffefa; text-align: center; }
@@ -256,14 +262,15 @@ h1, h2, h3, p { margin-top: 0; }
 .rental-benefits > span { display: inline-flex; align-items: center; gap: 8px; }
 .rental-benefits svg { color: #62846e; font-size: 1rem; }
 .rental-benefits a { color: #176b5b; font-weight: 700; text-decoration: none; }
-.rental-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 19px; }
-.rental-card { overflow: hidden; border: 1px solid #e4e8e0; border-radius: 17px; background: #fffefa; box-shadow: var(--shadow-card); }
+.rental-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-auto-rows: 1fr; align-items: stretch; gap: 19px; }
+.rental-card { height: 100%; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e4e8e0; border-radius: 17px; background: #fffefa; box-shadow: var(--shadow-card); }
 .rental-preview { position: relative; height: 220px; overflow: hidden; }
 .rental-preview img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
 .rental-card:hover .rental-preview img { transform: scale(1.04); }
-.rental-pill { position: absolute; top: 12px; left: 12px; padding: 5px 10px; border-radius: 999px; color: #315f4c; background: rgba(255,254,250,.92); font-size: .66rem; font-weight: 700; }
-.rental-card .fui-CardHeader { padding: 15px 16px 6px; }
-.rental-card-content { display: flex; flex-direction: column; gap: 13px; padding: 6px 16px 12px; }
+.fui-CardPreview.rental-preview > .rental-pill { position: absolute; inset: 12px auto auto 12px; justify-self: start; align-self: start; width: max-content; height: max-content; max-width: calc(100% - 24px); padding: 5px 10px; border-radius: 999px; color: #315f4c; background: rgba(255,254,250,.92); font-size: .66rem; font-weight: 700; }
+.rental-card .fui-CardHeader { min-height: 76px; padding: 15px 16px 6px; }
+.rental-card-content { display: flex; flex: 1; flex-direction: column; gap: 13px; padding: 6px 16px 12px; }
+.rental-card .fui-CardFooter { margin-top: auto; }
 .rental-card-content .fui-Field__label { margin-bottom: 5px; color: #6a776f; font-size: .71rem; }
 .rental-card-content .fui-Select { border-radius: 9px; }
 .rental-price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
@@ -354,16 +361,16 @@ h1, h2, h3, p { margin-top: 0; }
 .checkout-help .fui-Text { color: #748178; font-size: .7rem; }
 .checkout-help a { font-size: .7rem; font-weight: 700; text-decoration: none; }
 
-.wishlist-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
-.wishlist-card { overflow: hidden; border: 1px solid #e3e7df; border-radius: 17px; background: #fffefa; box-shadow: var(--shadow-card); }
+.wishlist-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-auto-rows: 1fr; align-items: stretch; gap: 18px; }
+.wishlist-card { height: 100%; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e3e7df; border-radius: 17px; background: #fffefa; box-shadow: var(--shadow-card); }
 .wishlist-preview { height: 235px; overflow: hidden; }
 .wishlist-preview img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
 .wishlist-card:hover .wishlist-preview img { transform: scale(1.04); }
-.wishlist-card .fui-CardHeader { padding: 15px 17px 5px; }
-.wishlist-product-price { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 4px 17px 13px; }
+.wishlist-card .fui-CardHeader { min-height: 68px; padding: 15px 17px 5px; }
+.wishlist-product-price { display: flex; flex: 1; justify-content: space-between; align-items: baseline; gap: 10px; padding: 4px 17px 13px; }
 .wishlist-product-price strong { color: #244b3b; font-size: 1.25rem; }
 .wishlist-product-price .fui-Text { color: #8a938c; font-size: .65rem; }
-.wishlist-card-actions { display: flex; flex-wrap: wrap; gap: 6px; padding: 11px 12px 13px; border-top: 1px solid #eff0eb; }
+.wishlist-card-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding: 11px 12px 13px; border-top: 1px solid #eff0eb; }
 .wishlist-card-actions .fui-Button { flex: 1; min-width: max-content; min-height: 35px; border-radius: 8px; font-size: .68rem; }
 .wishlist-card-actions .fui-Button:first-child { background: #176b5b; }
 .wishlist-card-actions .fui-Button:last-child { flex: 0 0 auto; color: #876e6a; }
@@ -510,9 +517,10 @@ h1, h2, h3, p { margin-top: 0; }
   .editorial-copy h2, .editorial-copy .fui-Title2 { font-size: 1.9rem; }
   .editorial-copy > .fui-Text { font-size: .79rem; }
   .product-grid, .shop-results .product-grid { grid-template-columns: 1fr; gap: 13px; }
-  .product-card { display: grid; grid-template-columns: 112px minmax(0,1fr); border-radius: 14px; }
-  .product-card-preview { height: auto; min-height: 100%; grid-row: 1 / 4; }
-  .product-image-link, .product-image-link img { min-height: 100%; }
+  .fui-Card.product-card { height: auto; display: grid; grid-template-columns: 112px minmax(0,1fr); border-radius: 14px; }
+  .product-card-preview { height: auto; min-height: 0; grid-row: 1 / 4; }
+  .product-image-link, .product-image-link img { height: 100%; min-height: 0; }
+  .product-card .fui-CardHeader { min-height: 0; }
   .product-card .fui-CardHeader { padding: 12px 12px 3px; }
   .product-card .fui-CardHeader__action { display: none; }
   .product-title { font-size: 1.02rem; }
@@ -524,7 +532,8 @@ h1, h2, h3, p { margin-top: 0; }
   .product-card-footer { grid-column: 2; padding: 7px 9px 10px; border-top: 0; }
   .product-card-footer .fui-Button { min-height: 32px; font-size: .65rem; }
   .product-card-footer .fui-Button:last-child { padding: 0 7px; }
-  .product-image-actions { top: 6px; right: 6px; }
+  .product-card-preview > .product-image-actions { inset: 6px 6px auto auto; }
+  .product-card-preview > .image-rental-tag { inset: auto auto 7px 6px; max-width: calc(100% - 12px); }
   .product-image-actions .fui-Button { min-width: 31px; width: 31px; height: 31px; }
   .image-rental-tag { right: 5px; bottom: 7px; left: 5px; padding: 4px 5px; font-size: .53rem; text-align: center; }
   .closing-note { align-items: flex-start; flex-wrap: wrap; gap: 13px; margin-top: 43px; padding: 18px; }
@@ -557,8 +566,9 @@ h1, h2, h3, p { margin-top: 0; }
   .spec-row dt, .spec-row dd { font-size: .73rem; }
   .rental-benefits { gap: 11px 19px; padding: 13px; font-size: .7rem; }
   .rental-grid { grid-template-columns: 1fr; gap: 13px; }
-  .rental-card { display: grid; grid-template-columns: 115px minmax(0,1fr); }
-  .rental-preview { height: auto; min-height: 100%; grid-row: 1 / 4; }
+  .fui-Card.rental-card { height: auto; display: grid; grid-template-columns: 115px minmax(0,1fr); }
+  .rental-preview { height: auto; min-height: 0; grid-row: 1 / 4; }
+  .rental-preview > .rental-pill { inset: 6px auto auto 6px; max-width: calc(100% - 12px); }
   .rental-card .fui-CardHeader { padding: 11px 11px 4px; }
   .rental-card-content { gap: 7px; padding: 2px 11px 8px; }
   .rental-card-content .fui-Field__label { margin-bottom: 3px; font-size: .63rem; }
@@ -577,8 +587,8 @@ h1, h2, h3, p { margin-top: 0; }
   .cart-product img { width: 43px; height: 43px; }
   .cart-product strong { font-size: .68rem; }
   .wishlist-grid { grid-template-columns: 1fr; }
-  .wishlist-card { display: grid; grid-template-columns: 112px minmax(0,1fr); }
-  .wishlist-preview { height: auto; min-height: 100%; grid-row: 1 / 4; }
+  .fui-Card.wishlist-card { height: auto; display: grid; grid-template-columns: 112px minmax(0,1fr); }
+  .wishlist-preview { height: auto; min-height: 0; grid-row: 1 / 4; }
   .wishlist-card .fui-CardHeader { padding: 12px 12px 3px; }
   .wishlist-product-price { align-items: flex-start; flex-direction: column; gap: 0; padding: 2px 12px 8px; }
   .wishlist-product-price strong { font-size: 1.07rem; }
@@ -608,6 +618,8 @@ h1, h2, h3, p { margin-top: 0; }
 @media (max-width: 380px) {
   .shop-sidebar { grid-template-columns: 1fr; }
   .shop-sidebar .fui-TabList, .sidebar-heading, .shop-sidebar > .fui-Divider, .filter-options { grid-column: 1; }
+  .fui-CardFooter.product-card-footer { display: grid; grid-template-columns: minmax(0,1fr); gap: 5px; }
+  .fui-CardFooter.product-card-footer .fui-Button { width: 100%; min-width: 0; min-height: 32px; flex: none; justify-content: center; padding: 0 6px; white-space: normal; }
   .detail-actions .fui-Button { flex: 1 1 45%; }
   .preview-switcher > span { display: none; }
   .preview-switcher { right: 5px; bottom: 5px; }

@@ -2,6 +2,7 @@ import { Button, Field, Select, Tab, TabList, Tag, Text, Title2 } from '@fluentu
 import { CartRegular, CheckmarkCircleRegular, GridRegular, HeartFilled, HeartRegular, StarRegular } from '@fluentui/react-icons';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { ImageWithFallback } from '../components/ImageWithFallback';
 import { PageIntro } from '../components/PageIntro';
 import { formatCurrency } from '../components/ProductCard';
 import { useStore } from '../context/StoreContext';
@@ -21,7 +22,7 @@ export function ProductDetailPage() {
     <main className="page-main detail-main">
       <PageIntro back="Product details" title={product.name} />
       <div className="detail-layout">
-        <section className="detail-media"><img src={product.image} alt={product.name} /><span className="detail-media-label">A little more ease, every day</span></section>
+        <section className="detail-media"><ImageWithFallback src={product.image} alt={product.name} /><span className="detail-media-label">A little more ease, every day</span></section>
         <section className="detail-copy">
           <Tag shape="rounded">{product.category}</Tag>
           <h1>{product.name}</h1>

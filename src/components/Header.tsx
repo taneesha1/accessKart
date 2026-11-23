@@ -1,4 +1,4 @@
-import { Avatar, Tab, TabList, Text, Toolbar, ToolbarButton, Tooltip } from '@fluentui/react-components';
+import { Avatar, Tab, TabList, Text, Toolbar, ToolbarButton } from '@fluentui/react-components';
 import { HomeRegular, GridRegular, CalendarRegular, HeartRegular, PersonRegular, CartRegular, AccessibilityRegular, SearchRegular } from '@fluentui/react-icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useStore } from '../context/StoreContext';
@@ -36,18 +36,10 @@ export function Header() {
             <button type="submit">Search</button>
           </form>
           <div className="header-actions">
-            <Tooltip content="Accessibility settings" relationship="label">
-              <ToolbarButton aria-label="Accessibility settings" icon={<AccessibilityRegular />} onClick={() => setAccessibilityOpen(!accessibilityOpen)} />
-            </Tooltip>
-            <Tooltip content={`Compare ${comparison.length} products`} relationship="label">
-              <ToolbarButton onClick={() => navigate('/compare')} aria-label={`Compare, ${comparison.length} items`} icon={<GridRegular />} />
-            </Tooltip>
-            <Tooltip content="Your wishlist" relationship="label">
-              <ToolbarButton onClick={() => navigate('/wishlist')} aria-label={`Wishlist, ${wishlist.length} saved`} icon={<HeartRegular />} />
-            </Tooltip>
-            <Tooltip content="Your shopping cart" relationship="label">
-              <ToolbarButton onClick={() => navigate('/cart')} aria-label={`Cart, ${cart.length} items`} icon={<CartRegular />} />
-            </Tooltip>
+            <ToolbarButton title="Accessibility settings" aria-label="Accessibility settings" icon={<AccessibilityRegular />} onClick={() => setAccessibilityOpen(!accessibilityOpen)} />
+            <ToolbarButton title={`Compare ${comparison.length} products`} onClick={() => navigate('/compare')} aria-label={`Compare, ${comparison.length} items`} icon={<GridRegular />} />
+            <ToolbarButton title="Your wishlist" onClick={() => navigate('/wishlist')} aria-label={`Wishlist, ${wishlist.length} saved`} icon={<HeartRegular />} />
+            <ToolbarButton title="Your shopping cart" onClick={() => navigate('/cart')} aria-label={`Cart, ${cart.length} items`} icon={<CartRegular />} />
             <Link to="/account" className="account-shortcut"><Avatar name={profile.name || 'Maya Chen'} size={32} color="brand" /><span className="account-shortcut-name">{profile.name.split(' ')[0] || 'Account'}</span></Link>
           </div>
         </Toolbar>

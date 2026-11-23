@@ -2,13 +2,14 @@ import { Button, Card, Field, Input, Radio, RadioGroup, Text } from '@fluentui/r
 import { ArrowLeftRegular, LockClosedRegular } from '@fluentui/react-icons';
 import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { formatCurrency } from '../components/ProductCard';
 import { PageIntro } from '../components/PageIntro';
 import { OrderSummary } from '../components/OrderSummary';
 import { useCartTotals, useStore } from '../context/StoreContext';
 
 const paymentOptions = [
-  { value: 'card', title: 'Card', note: 'Demo card · 4242 4242 4242 4242' },
-  { value: 'upi', title: 'UPI', note: 'Demo UPI payment' },
+  { value: 'card', title: 'Card', note: 'Demo card · amount shown in INR' },
+  { value: 'upi', title: 'UPI', note: 'Demo UPI · amount shown in INR' },
   { value: 'cod', title: 'Cash on delivery', note: 'Pay when your order arrives' },
   { value: 'approval', title: 'Purchase on approval', note: 'A team member will help you arrange it' },
 ];
@@ -63,7 +64,7 @@ export function CheckoutPage() {
             </RadioGroup>
           </Card>
           {error && <div className="checkout-error" role="alert">{error}</div>}
-          <div className="checkout-actions"><Link className="fui-Button fui-Button--secondary" to="/cart"><ArrowLeftRegular /> Back to cart</Link><Button appearance="primary" type="submit" icon={<LockClosedRegular />} disabled={submitting}>{submitting ? 'Placing your demo order…' : `Place demo order · $${totals.total.toFixed(2)}`}</Button></div>
+          <div className="checkout-actions"><Link className="fui-Button fui-Button--secondary" to="/cart"><ArrowLeftRegular /> Back to cart</Link><Button appearance="primary" type="submit" icon={<LockClosedRegular />} disabled={submitting}>{submitting ? 'Placing your demo order…' : `Place demo order · ${formatCurrency(totals.total)}`}</Button></div>
         </div>
         <aside className="checkout-summary"><OrderSummary checkout /><Card className="checkout-help"><strong>A real person, when you need one.</strong><Text size={200}>Questions about what you need? Our care team is here to help you choose.</Text><Link to="/account">Get in touch</Link></Card></aside>
       </form>

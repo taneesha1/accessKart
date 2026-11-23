@@ -3,6 +3,7 @@ import { CartRegular, GridRegular, HeartFilled, HeartRegular, StarRegular } from
 import { Link } from 'react-router-dom';
 import type { Product } from '../api/types';
 import { useStore } from '../context/StoreContext';
+import { ImageWithFallback } from './ImageWithFallback';
 
 export function ProductCard({ product, compact = false }: { product: Product; compact?: boolean }) {
   const { wishlist, toggleWishlist, comparison, toggleCompare, addPurchase } = useStore();
@@ -12,7 +13,7 @@ export function ProductCard({ product, compact = false }: { product: Product; co
     <Card className={`product-card${compact ? ' product-card--compact' : ''}`}>
       <CardPreview className="product-card-preview">
         <Link to={`/product/${product.id}`} className="product-image-link" aria-label={`View ${product.name}`}>
-          <img className="product-image" src={product.image} alt={product.name} loading="lazy" />
+          <ImageWithFallback className="product-image" src={product.image} alt={product.name} loading="lazy" />
         </Link>
         <div className="product-image-actions">
           <Button size="small" shape="circular" appearance="subtle" icon={saved ? <HeartFilled /> : <HeartRegular />} aria-label={saved ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`} aria-pressed={saved} onClick={() => toggleWishlist(product.id)} />
@@ -38,5 +39,5 @@ export function ProductCard({ product, compact = false }: { product: Product; co
 }
 
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
 }

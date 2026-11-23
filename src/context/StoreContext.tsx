@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { api } from '../api';
+import { calculateRentalDeposit } from '../api/pricing';
 import type { CartItem, Category, Order, Product, Profile } from '../api/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -134,8 +135,10 @@ export function useCartTotals() {
       const product = products.find((entry) => entry.id === item.productId);
       return sum + (product ? rentalPrice(product, item.days ?? 7) : 0) * item.quantity;
     }, 0);
-    const deposit = rentals.length ? 50 * rentals.reduce((sum, item) => sum + item.quantity, 0) : 0;
-    const tax = (purchaseSubtotal + rentalSubtotal) * 0.1;
-    return { purchases, rentals, purchaseSubtotal, rentalSubtotal, deposit, tax, total: purchaseSubtotal + rentalSubtotal + deposit + tax };
+    const deposit = rentals.reduce((sum, item) => {
+      const product = products.find((entry) => entry.id === item.productId);
+      return sum + (product ? calculateRentalDeposit(product.price) * item.quantity : 0);
+    }, 0);
+    return { purchases, rentals, purchaseSubtotal, rentalSubtotal, deposit, total: purchaseSubtotal + rentalSubtotal + deposit };
   }, [products, cart]);
 }

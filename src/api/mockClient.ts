@@ -1,4 +1,5 @@
 import type { ApiClient, CreateOrderInput, Order, Product } from './types';
+import { calculateRentalDeposit } from './pricing';
 import { getPreviewState } from './previewState';
 import { categories, products, sampleOrders, sampleProfile } from '../mocks/data';
 
@@ -22,7 +23,7 @@ export const mockClient: ApiClient = {
       const product = products.find((entry) => entry.id === item.productId);
       const total = item.type === 'purchase'
         ? (product?.price ?? 0) * item.quantity
-        : rentalTotal(product, item.days ?? 7) * item.quantity + 50;
+        : rentalTotal(product, item.days ?? 7) * item.quantity + (product ? calculateRentalDeposit(product.price) * item.quantity : 0);
       return {
         id: `AK-${Date.now().toString().slice(-5)}${index}`,
         type: item.type === 'purchase' ? 'Purchase' : 'Rental',

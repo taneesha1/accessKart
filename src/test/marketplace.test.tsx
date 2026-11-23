@@ -2,11 +2,41 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../App';
+import { formatCurrency } from '../components/ProductCard';
+import { calculateRentalDeposit } from '../api/pricing';
 
 describe('AccessKart marketplace', () => {
   beforeEach(() => {
     window.history.replaceState({}, '', '/');
     window.confirm = vi.fn(() => true);
+  });
+
+  it('formats marketplace amounts in Indian rupees', () => {
+    expect(formatCurrency(1234567.89)).toBe('₹12,34,567.89');
+  });
+
+  it('calculates refundable rental deposits from replacement value', () => {
+    expect(calculateRentalDeposit(5499)).toBe(1000);
+    expect(calculateRentalDeposit(25000)).toBe(2500);
+  });
+
+  it('sorts the catalog by price', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+    await screen.findByRole('heading', { name: 'What would help today?' });
+    await user.click(screen.getByRole('tab', { name: 'Shop' }));
+    await screen.findByRole('heading', { name: 'Find your kind of support' });
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Sort products' }), 'price-asc');
+
+    expect(container.querySelector('.shop-results .product-title')).toHaveTextContent('EasyReach Daily Living Kit');
+  });
+
+  it('shows a fallback illustration when a product image fails', async () => {
+    render(<App />);
+    const image = await screen.findByRole('img', { name: 'Lightweight Folding Wheelchair' });
+    fireEvent.error(image);
+
+    await waitFor(() => expect(image.getAttribute('src')).toContain('data:image/svg+xml'));
   });
 
   it('keeps purchases and rental reservations as distinct persisted cart lines', async () => {

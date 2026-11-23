@@ -2,6 +2,8 @@ import { Button, Card, CardFooter, CardHeader, CardPreview, Field, Select, Text 
 import { ArrowRightRegular, CalendarRegular, CartRegular, ShieldCheckmarkRegular } from '@fluentui/react-icons';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { calculateRentalDeposit } from '../api/pricing';
+import { ImageWithFallback } from '../components/ImageWithFallback';
 import { PageIntro } from '../components/PageIntro';
 import { formatCurrency } from '../components/ProductCard';
 import { rentalPrice, useStore } from '../context/StoreContext';
@@ -18,7 +20,7 @@ export function RentPage() {
         {rentable.map((product) => {
           const days = periods[product.id] ?? 7;
           return <Card key={product.id} className="rental-card">
-            <CardPreview className="rental-preview"><Link to={`/product/${product.id}`} aria-label={`View ${product.name}`}><img src={product.image} alt="" loading="lazy" /></Link><span className="rental-pill">Available to rent</span></CardPreview>
+            <CardPreview className="rental-preview"><Link to={`/product/${product.id}`} aria-label={`View ${product.name}`}><ImageWithFallback src={product.image} alt="" loading="lazy" /></Link><span className="rental-pill">Available to rent</span></CardPreview>
             <CardHeader header={<Link className="product-title" to={`/product/${product.id}`}>{product.name}</Link>} description={<span className="product-vendor">{product.vendor}</span>} />
             <div className="rental-card-content">
               <Field label="Choose a rental period"><Select value={String(days)} onChange={(event) => setPeriods((current) => ({ ...current, [product.id]: Number(event.currentTarget.value) }))}>
@@ -27,7 +29,7 @@ export function RentPage() {
                 <option value="14">Two weeks · {formatCurrency(product.rentalRates!.weekly * 2)}</option>
                 <option value="30">Monthly · {formatCurrency(product.rentalRates!.monthly)} / month</option>
               </Select></Field>
-              <div className="rental-price-row"><span><strong>{formatCurrency(rentalPrice(product, days))}</strong><small>for {days} {days === 1 ? 'day' : 'days'}</small></span><span className="deposit-note">+$50 refundable deposit</span></div>
+              <div className="rental-price-row"><span><strong>{formatCurrency(rentalPrice(product, days))}</strong><small>for {days} {days === 1 ? 'day' : 'days'}</small></span><span className="deposit-note">+{formatCurrency(calculateRentalDeposit(product.price))} refundable deposit</span></div>
             </div>
             <CardFooter><Button appearance="primary" icon={<CartRegular />} onClick={() => addRental(product.id, days)}>Add rental to cart</Button><Link className="fui-Button fui-Button--subtle" to={`/product/${product.id}`}>Details</Link></CardFooter>
           </Card>;

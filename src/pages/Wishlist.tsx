@@ -1,6 +1,7 @@
 import { Button, Card, CardFooter, CardHeader, CardPreview, Text } from '@fluentui/react-components';
 import { CartRegular, DeleteRegular } from '@fluentui/react-icons';
 import { Link } from 'react-router-dom';
+import { ImageWithFallback } from '../components/ImageWithFallback';
 import { PageIntro } from '../components/PageIntro';
 import { formatCurrency } from '../components/ProductCard';
 import { useStore } from '../context/StoreContext';
@@ -15,7 +16,7 @@ export function WishlistPage() {
     <main className="page-main wishlist-main">
       <PageIntro eyebrow="No need to decide today" title="Saved for when you’re ready" description="Your favorite finds, waiting right here. Take your time; they aren’t going anywhere." />
       {saved.length ? <div className="wishlist-grid">{saved.map((product) => <Card key={product.id} className="wishlist-card">
-        <CardPreview className="wishlist-preview"><Link to={`/product/${product.id}`} aria-label={`View ${product.name}`}><img src={product.image} alt="" loading="lazy" /></Link></CardPreview>
+        <CardPreview className="wishlist-preview"><Link to={`/product/${product.id}`} aria-label={`View ${product.name}`}><ImageWithFallback src={product.image} alt="" loading="lazy" /></Link></CardPreview>
         <CardHeader header={<Link className="product-title" to={`/product/${product.id}`}>{product.name}</Link>} description={<span className="product-vendor">{product.vendor}</span>} />
         <div className="wishlist-product-price"><strong>{formatCurrency(product.price)}</strong><Text size={200}>{product.rentalRates ? `or rent from ${formatCurrency(product.rentalRates.daily)}/day` : 'Available to purchase'}</Text></div>
         <CardFooter className="wishlist-card-actions"><Button appearance="primary" icon={<CartRegular />} onClick={() => addPurchase(product.id)}>Add to purchase</Button>{product.rentalRates && <Button appearance="secondary" onClick={() => addRental(product.id, 7)}>Choose a rental</Button>}<Button appearance="subtle" icon={<DeleteRegular />} aria-label={`Remove ${product.name} from saved products`} onClick={() => remove(product.id, product.name)}>Remove</Button></CardFooter>
