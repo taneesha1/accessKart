@@ -3,6 +3,7 @@ import { api } from '../api';
 import { calculateRentalDeposit } from '../api/pricing';
 import type { CartItem, Category, Order, Product, Profile } from '../api/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useAuth } from './AuthContext';
 
 type CatalogStatus = 'loading' | 'error' | 'empty' | 'data';
 type StoreValue = {
@@ -31,13 +32,20 @@ const emptyProfile: Profile = { name: '', email: '', address: '' };
 const StoreContext = createContext<StoreValue | null>(null);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  const storageScope = user?.uid;
+  const profileStorageKey = storageScope ? `accesskart:${storageScope}:profile` : 'accesskart-profile';
+  const ordersStorageKey = storageScope ? `accesskart:${storageScope}:orders` : 'accesskart-orders';
+  const cartStorageKey = storageScope ? `accesskart:${storageScope}:cart` : 'accesskart-cart';
+  const wishlistStorageKey = storageScope ? `accesskart:${storageScope}:wishlist` : 'accesskart-wishlist';
+  const compareStorageKey = storageScope ? `accesskart:${storageScope}:compare` : 'accesskart-compare';
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [orders, setOrders] = useLocalStorage<Order[]>('accesskart-orders', []);
-  const [profile, setProfile] = useLocalStorage<Profile>('accesskart-profile', emptyProfile);
-  const [cart, setCart] = useLocalStorage<CartItem[]>('accesskart-cart', []);
-  const [wishlist, setWishlist] = useLocalStorage<string[]>('accesskart-wishlist', []);
-  const [comparison, setComparison] = useLocalStorage<string[]>('accesskart-compare', []);
+  const [orders, setOrders] = useLocalStorage<Order[]>(ordersStorageKey, []);
+  const [profile, setProfile] = useLocalStorage<Profile>(profileStorageKey, emptyProfile);
+  const [cart, setCart] = useLocalStorage<CartItem[]>(cartStorageKey, []);
+  const [wishlist, setWishlist] = useLocalStorage<string[]>(wishlistStorageKey, []);
+  const [comparison, setComparison] = useLocalStorage<string[]>(compareStorageKey, []);
   const [catalogStatus, setCatalogStatus] = useState<CatalogStatus>('loading');
   const [catalogError, setCatalogError] = useState('');
   const [refreshVersion, setRefreshVersion] = useState(0);
@@ -50,8 +58,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         if (!active) return;
         setProducts(nextProducts);
         setCategories(nextCategories);
-        if (!window.localStorage.getItem('accesskart-profile') && nextProfile.email) setProfile(nextProfile);
-        if (!window.localStorage.getItem('accesskart-orders') && nextOrders.length > 0) setOrders(nextOrders);
+        if (!user && !window.localStorage.getItem(profileStorageKey) && nextProfile.email) setProfile(nextProfile);
+        if (!user && !window.localStorage.getItem(ordersStorageKey) && nextOrders.length > 0) setOrders(nextOrders);
         setCatalogError('');
         setCatalogStatus(nextProducts.length ? 'data' : 'empty');
       })
@@ -61,7 +69,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setCatalogStatus('error');
       });
     return () => { active = false; };
-  }, [refreshVersion, setOrders, setProfile]);
+  }, [refreshVersion, user?.uid, profileStorageKey, ordersStorageKey, setOrders, setProfile]);
+
+  useEffect(() => {
+    if (!user) return;
+    setProfile((current) => ({
+      ...current,
+      name: user.displayName || current.name,
+      email: user.email || current.email,
+    }));
+  }, [user?.uid, user?.displayName, user?.email, setProfile]);
 
   const refresh = useCallback(() => setRefreshVersion((version) => version + 1), []);
   const updateProfile = useCallback(async (nextProfile: Profile) => {

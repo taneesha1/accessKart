@@ -1,27 +1,31 @@
 import { Button, Card, Field, Input, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow, Text, Title2 } from '@fluentui/react-components';
 import { CheckmarkRegular, PersonRegular } from '@fluentui/react-icons';
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PageIntro } from '../components/PageIntro';
 import { formatCurrency } from '../components/ProductCard';
 import { useAccessibility } from '../context/AccessibilityContext';
 import { useStore } from '../context/StoreContext';
+import { useAuth } from '../context/AuthContext';
 import type { Profile } from '../api/types';
 
 export function AccountPage() {
   const { profile, updateProfile, orders } = useStore();
+  const { user, signOutUser, updateAccountName } = useAuth();
+  const navigate = useNavigate();
   const { preferences, reset } = useAccessibility();
   const [form, setForm] = useState(profile);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
-  useEffect(() => setForm(profile), [profile]);
+  useEffect(() => setForm({ ...profile, name: user?.displayName || profile.name || '', email: user?.email || profile.email }), [profile, user]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError('');
     setSaved(false);
     try {
-      await updateProfile(form);
+      await updateAccountName(form.name);
+      await updateProfile({ ...form, email: user?.email || form.email });
       setSaved(true);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : 'Your profile could not be saved.');
@@ -36,12 +40,13 @@ export function AccountPage() {
   const rentalOrders = orders.filter((order) => order.type === 'Rental');
   return (
     <main className="page-main account-main">
-      <PageIntro eyebrow="Your AccessKart" title={`Good to see you${profile.name ? `, ${profile.name.split(' ')[0]}` : ''}.`} description="A place for your details, your choices, and everything you’ve ordered." />
+      <div className="account-auth-bar"><span>Signed in as <strong>{user?.email}</strong></span><Button appearance="secondary" onClick={async () => { await signOutUser(); navigate('/'); }}>Sign out</Button></div>
+      <PageIntro eyebrow="Your AccessKart" title={`Good to see you${(user?.displayName || profile.name) ? `, ${(user?.displayName || profile.name).split(' ')[0]}` : ''}.`} description="A place for your details, your choices, and everything you’ve ordered." />
       <div className="account-grid">
         <Card className="profile-card"><div className="account-card-heading"><span className="account-avatar"><PersonRegular /></span><div><h2>Your details</h2><Text size={200}>Keep things up to date, whenever you like.</Text></div></div>
           <form onSubmit={submit} className="profile-form">
             <Field label="Full name" required><Input autoComplete="name" required value={form.name} onChange={(_, data) => updateField('name', data.value)} /></Field>
-            <Field label="Email address" required><Input type="email" autoComplete="email" required value={form.email} onChange={(_, data) => updateField('email', data.value)} /></Field>
+            <Field label="Email address" required><Input type="email" autoComplete="email" required value={user?.email || form.email} readOnly /></Field>
             <Field label="Default delivery address"><Input autoComplete="street-address" value={form.address} onChange={(_, data) => updateField('address', data.value)} /></Field>
             {error && <span role="alert" className="form-feedback form-feedback--error">{error}</span>}
             {saved && <span role="status" className="form-feedback"><CheckmarkRegular /> Your details are saved.</span>}

@@ -11,6 +11,7 @@
   "dependencies": {
     "@fluentui/react-components": "^9.68.0",
     "@fluentui/react-icons": "^2.0.312",
+    "firebase": "^13.4.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.8.2"

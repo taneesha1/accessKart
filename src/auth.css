@@ -1,0 +1,36 @@
+/* AccessKart Firebase authentication pages */
+.auth-page { min-height: 66vh; display: grid; place-items: center; padding: 48px 20px 64px; background: var(--color-surface, #f7f4ed); }
+.auth-card { width: min(100%, 470px); padding: 34px; border: 1px solid var(--color-border, #d8dfda); border-radius: 18px; background: var(--color-card, #fffefa); box-shadow: 0 12px 36px rgba(27,55,46,.08); }
+.auth-card h1 { margin: 9px 0 8px; color: var(--color-text, #17352f); font-size: clamp(1.8rem, 4vw, 2.35rem); line-height: 1.12; }
+.auth-subtitle { display: block; margin-bottom: 23px; color: var(--color-muted, #61716d); line-height: 1.55; }
+.auth-form { display: flex; flex-direction: column; gap: 16px; }
+.auth-form .fui-Button { min-height: 44px; border-radius: 9px; }
+.google-button { width: 100%; min-height: 44px; border-radius: 9px; }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--color-muted, #61716d); font-size: 12px; }
+.auth-divider::before, .auth-divider::after { content: ''; height: 1px; flex: 1; background: var(--color-border, #d8dfda); }
+.auth-inline-link { display: flex; justify-content: flex-end; margin-top: -7px; font-size: 13px; }
+.auth-switch { display: block; margin-top: 22px; text-align: center; color: var(--color-muted, #61716d); font-size: 13px; }
+.auth-switch a, .auth-inline-link a { color: var(--color-primary, #176b5b); font-weight: 650; text-decoration: none; }
+.auth-switch a:hover, .auth-inline-link a:hover { text-decoration: underline; }
+.password-toggle { border: 0; background: transparent; color: var(--color-primary, #176b5b); cursor: pointer; font-size: 12px; font-weight: 650; }
+.auth-error, .auth-success { padding: 11px 13px; border-radius: 8px; font-size: 13px; line-height: 1.45; }
+.auth-error { color: #a12d2d; background: #fff0ee; border: 1px solid #f1c7c1; }
+.auth-success { color: #176b48; background: #edf8f1; border: 1px solid #c6e7d2; }
+.auth-loading { min-height: 45vh; display: grid; place-items: center; }
+.auth-header-error { padding: 8px 20px; color: #a12d2d; background: #fff0ee; text-align: center; font-size: 13px; }
+.account-auth-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; color: var(--color-muted, #61716d); font-size: 13px; }
+.account-auth-bar strong { color: var(--color-text, #17352f); }
+.theme-toggle-icon { font-size: 21px; line-height: 1; }
+[data-theme="dark"] .auth-page { background: #151c1a; }
+[data-theme="dark"] .auth-card { background: #202a26; border-color: #394941; }
+[data-theme="dark"] .auth-card h1 { color: #e5eee9; }
+[data-theme="dark"] .auth-subtitle, [data-theme="dark"] .auth-switch { color: #a0b0a8; }
+[data-theme="dark"] .auth-divider { color: #a0b0a8; }
+[data-theme="dark"] .auth-divider::before, [data-theme="dark"] .auth-divider::after { background: #394941; }
+[data-theme="dark"] .auth-card .fui-Field__label { color: #d3dfd7; }
+[data-theme="dark"] .auth-card .fui-Input { background: #293630; color: #e5eee9; border-color: #46564d; }
+[data-theme="dark"] .auth-card .google-button { color: #e5eee9; border-color: #53665a; }
+[data-theme="dark"] .auth-error { color: #ffc4bb; background: #482b29; border-color: #70423d; }
+[data-theme="dark"] .auth-success { color: #bce8ce; background: #203b2d; border-color: #38644a; }
+[data-theme="dark"] .account-auth-bar, [data-theme="dark"] .account-auth-bar strong { color: #c2d1c8; }
+@media (max-width: 600px) { .auth-card { padding: 24px 19px; } .account-auth-bar { align-items: flex-start; flex-direction: column; } }
