@@ -1,4 +1,9 @@
-import { createLightTheme, type BrandVariants } from '@fluentui/react-components';
+
+import {
+  createLightTheme,
+  createDarkTheme,
+  type BrandVariants,
+} from '@fluentui/react-components';
 
 const accessKartBrand: BrandVariants = {
   10: '#061d19',
@@ -19,11 +24,21 @@ const accessKartBrand: BrandVariants = {
   160: '#fbfefd',
 };
 
-export const appTheme = {
+export const appLightTheme = {
   ...createLightTheme(accessKartBrand),
-  fontFamilyBase: 'Inter, system-ui, -apple-system, "Segoe UI", sans-serif',
+  fontFamilyBase: 'DM Sans, Inter, system-ui, sans-serif',
   colorBrandBackground: '#176b5b',
   colorBrandBackgroundHover: '#12564a',
   colorBrandBackgroundPressed: '#0e443a',
   colorBrandForeground1: '#176b5b',
 };
+
+export const appDarkTheme = {
+  ...createDarkTheme(accessKartBrand),
+  fontFamilyBase: 'DM Sans, Inter, system-ui, sans-serif',
+  colorBrandBackground: '#47aa96',
+  colorBrandBackgroundHover: '#66bdab',
+  colorBrandBackgroundPressed: '#309582',
+  colorBrandForeground1: '#66bdab',
+};
+
